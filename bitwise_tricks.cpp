@@ -131,6 +131,74 @@ int flipBit(int num)
     return  maxLength;
 }
 
+//Gets the next number that is smaller than n, but has the same
+// count of 1s in its binary representation
+int getPrev(int n)
+{
+    int temp = n;
+    int c1 = 0;//count of trailing 1s
+    int c0 = 0;
+    while((temp & 1) == 1)
+    {
+        c1++;
+        temp = temp >> 1;
+    }
+    if(temp == 0)
+    {
+        return -1;
+    }
+    while((temp & 1) == 0 && temp != 0)
+    {
+        c0++;
+        temp = temp >> 1;
+    }
+    int p = c1 + c0;
+    n = n & ((~0) << (p+1));
+    int mask = (1 << (c1+1)) - 1;
+    return n | (mask << (c0 - 1));
+}
+int getNext(int n)
+{
+    int c0 = 0;
+    int c1 = 0;
+    int temp = n;
+    while((temp & 1) == 0)
+    {
+        c0++;
+        temp  = temp >> 1;
+    }
+    while((temp & 1) == 1)
+    {
+        c1++;
+        temp = temp>>1;
+    }
+    if(c1 + c0 == 32 || c1 + c0 == 0)
+    {
+        return -1;
+    }
+    int p = c1 + c0;
+    n = n | (1 << p);
+    n = n & (~ ((1 << p) -1));
+    return  n | (1 << (c1 - 1)) - 1;
+}
+
+int differentBits(int a, int b)
+{
+    int temp = a ^ b;    
+    int count = 0;
+    while(temp!=0)
+    {
+        /*if((temp & 1) == 1)
+            count++;
+        temp = temp >> 1; */
+
+        //Better approach:
+        count++;
+        temp = temp & (temp - 1);
+    }
+    return count;
+}
+
 void bitTricksTest()
 {
     int n = 9; //1001
@@ -173,6 +241,12 @@ void flipTest()
      std::cout<<flipBit(9)<<std::endl;//1001 -> the length is 2
 }
 
+void differentBitsTest()
+{
+    int a = 29, b = 15;
+    std::cout<<"You should flip "<<differentBits(a,b)<<" bits!"; // 2
+}
+
 int main()
 {
     bitTricksTest();
@@ -185,5 +259,8 @@ int main()
     std::cout<<"=========================\n";
 
     flipTest();
+    std::cout<<"=========================\n";
+
+    differentBitsTest();
     return 0;
 }
