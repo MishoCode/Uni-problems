@@ -166,6 +166,7 @@ void testSorting()
 	printArray(arr, 8);
 	
 }
+
 int main()
 {
 	testSorting();
