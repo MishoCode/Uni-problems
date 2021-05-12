@@ -37,7 +37,7 @@ struct Meeting
             }
         }
         
-        delete m;
+        delete[] m;
         return counter;
     }
 

@@ -1,4 +1,3 @@
-a.exe
+*.exe
 graph_entry.txt
 graphs.cpp
-graphs.exe
