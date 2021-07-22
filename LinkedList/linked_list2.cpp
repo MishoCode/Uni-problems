@@ -31,6 +31,17 @@ void print(Node* head)
 	std::cout << std::endl;
 }
 
+void destroyList(Node* head)
+{
+	Node* curr = head, *next = nullptr;
+	while (curr != nullptr)
+	{
+		next = curr->next;
+		delete curr;
+		curr = next;
+	}
+}
+
 void removeDuplicates(Node* head)
 {
 	Node* curr = head;
@@ -111,23 +122,27 @@ Node* lastElementsIterative(Node* head, int k)
 }
 int main()
 {
+	Node* sample1 = createSample1();
 	std::cout << "Original list: ";
-	print(createSample1());
+	print(sample1);
 
 	std::cout << "Remove duplicates: ";
-	Node* sample1 = createSample1();
 	removeDuplicates(sample1);
 	print(sample1);
 
 	std::cout << "Remove duplicates(second approach): ";
-	Node* sample2 = createSample1();
+	sample1 = createSample1();
 	removeDuplicates2(sample1);
 	print(sample1);
 
+	sample1 = createSample1();
 	std::cout << "Last 3 elements: ";
-	print(lastElements(createSample1(),3));
+	print(lastElements(sample1,3));
 
-	std::cout << "Last 3 elements(iterative approach): ";
-	print(lastElements(createSample1(), 3));
+	std::cout << "Last 5 elements(iterative approach): ";
+	print(lastElements(sample1, 5));
+
+	destroyList(sample1);
+
 	return 0;
 }

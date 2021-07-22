@@ -22,9 +22,7 @@ struct PartialSum
 
 void destroyList(Node* head)
 {
-	if (head == nullptr)
-		return;
-	Node* curr = head, * next = nullptr;
+	Node* curr = head, *next = nullptr;
 	while (curr != nullptr)
 	{
 		next = curr->next;
@@ -32,6 +30,7 @@ void destroyList(Node* head)
 		curr = next;
 	}
 }
+
 void printList(Node* head)
 {
 	while (head != nullptr)

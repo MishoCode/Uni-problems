@@ -8,11 +8,19 @@ struct Node
     Node(int data, Node* next = nullptr)
         :next(next), data(data)
     {}
-    ~Node()
-    {
-        delete next;
-    }
+    
 };
+
+void destroyList(Node* head)
+{
+	Node* curr = head, *next = nullptr;
+	while (curr != nullptr)
+	{
+		next = curr->next;
+		delete curr;
+		curr = next;
+	}
+}
 
 Node* reverse(Node* head)
 {
@@ -57,7 +65,7 @@ void testReverse()
     Node* result = reverse(test);
     printList(result);
 
-    delete test;
+    destroyList(result);
 
 }
 int main()
