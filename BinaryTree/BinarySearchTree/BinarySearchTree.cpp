@@ -43,6 +43,79 @@ void BinarySearchTree<T>::add(const T& x){
 }
 
 template<class T>
+typename BinarySearchTree<T>::Node* BinarySearchTree<T>::findMin(Node* node) const {
+	if (node == nullptr) {
+		return nullptr;
+	}
+
+	if (node->left == nullptr) {
+		return node;
+	}
+	else {
+		return findMin(node->left);
+	}
+}
+
+template<class T>
+typename BinarySearchTree<T>::Node* BinarySearchTree<T>::remove(Node* node, const T& x) {
+	if (node == nullptr) {
+		return nullptr;
+	}
+	else if (x < node->data) {
+		node->left = remove(node->left, x);
+	}
+	else if (x > node->data) {
+		node->right = remove(node->right, x);
+	}
+	else {
+		Node* temp = nullptr;
+		if (node->left != nullptr && node->right != nullptr) {
+			temp = findMin(node->right);
+			node->data = temp->data;
+			node->right = remove(node->right, temp->data);
+		}
+		else if(node->left == nullptr){
+			temp = node;
+			node = node->right;
+			delete temp;
+		}
+		else if (node->right == nullptr) {
+			temp = node;
+			node = node->left;
+			delete temp;
+		}
+	}
+
+	return node;
+}
+
+template<class T>
+void BinarySearchTree<T>::remove(const T& x) {
+	root = remove(root, x);
+}
+
+template<class T>
+bool BinarySearchTree<T>::search(Node* node, const T& x) const {
+	if (node == nullptr) {
+		return false;
+	}
+	else if (x < node->data) {
+		return search(node->left, x);
+	}
+	else if (x > node->data) {
+		return search(node->right, x);
+	}
+	else {
+		return true;
+	}
+}
+
+template<class T>
+bool BinarySearchTree<T>::search(const T& x) const {
+	return search(root, x);
+}
+
+template<class T>
 void BinarySearchTree<T>::printInorder(Node* node) const {
 	if (node == nullptr) {
 		return;
@@ -83,3 +156,4 @@ void BinarySearchTree<T>::printDot(std::ostream& out) const {
 	printDot(root, out);
 	out << "}\n";
 }
+
