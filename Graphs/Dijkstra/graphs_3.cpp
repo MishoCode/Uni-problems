@@ -17,7 +17,7 @@ public:
 		delete[] graph;
 		delete[] used;
 		delete[] prev;
-        delete[] cost;
+          	delete[] cost;
 	}
 
 	void clearUsed() {
