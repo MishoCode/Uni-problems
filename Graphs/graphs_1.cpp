@@ -53,7 +53,6 @@ public:
 
 	void bfsLevelsPrint(int start) {
 		std::queue<int> q;
-		int levelsCount = 0;
 
 		used[start] = true;
 		q.push(start);
