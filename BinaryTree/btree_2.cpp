@@ -1,19 +1,20 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 
-//Merge two binary search trees
+// Merge two binary search trees
 
 struct Node
 {
 	int data;
-	Node* left, * right;
+	Node *left, *right;
 
-	Node(int data, Node* left = nullptr, Node* right = nullptr)
-		:data(data), left(left), right(right)
-	{}
+	Node(int data, Node *left = nullptr, Node *right = nullptr)
+		: data(data), left(left), right(right)
+	{
+	}
 };
 
-void printInorder(Node* root)
+void printInorder(Node *root)
 {
 	if (root == nullptr)
 		return;
@@ -21,7 +22,7 @@ void printInorder(Node* root)
 	std::cout << root->data << " ";
 	printInorder(root->right);
 }
-void destroyTree(Node* root)
+void destroyTree(Node *root)
 {
 	if (root == nullptr)
 		return;
@@ -30,7 +31,7 @@ void destroyTree(Node* root)
 	destroyTree(root->right);
 	delete root;
 }
-void storeInorder(Node* root, std::vector<int>& arr)
+void storeInorder(Node *root, std::vector<int> &arr)
 {
 	if (root == nullptr)
 		return;
@@ -39,12 +40,12 @@ void storeInorder(Node* root, std::vector<int>& arr)
 	arr.push_back(root->data);
 	storeInorder(root->right, arr);
 }
-void mergeArrays(const std::vector<int>& arr1, const std::vector<int>& arr2, std::vector<int>& result)
+void mergeArrays(const std::vector<int> &arr1, const std::vector<int> &arr2, std::vector<int> &result)
 {
 	size_t len1 = arr1.size();
 	size_t len2 = arr2.size();
 	size_t i = 0, j = 0, k = 0;
-	while (i < len1 && j < len2) 
+	while (i < len1 && j < len2)
 	{
 		if (arr1[i] < arr2[j])
 		{
@@ -58,8 +59,8 @@ void mergeArrays(const std::vector<int>& arr1, const std::vector<int>& arr2, std
 		}
 		k++;
 	}
-	
-	while(i<len1)
+
+	while (i < len1)
 	{
 		result.push_back(arr1[i]);
 		k++;
@@ -72,18 +73,18 @@ void mergeArrays(const std::vector<int>& arr1, const std::vector<int>& arr2, std
 		j++;
 	}
 }
-Node* createBSTfromSortedArray(const std::vector<int>& arr, size_t start, size_t end)
+Node *createBSTfromSortedArray(const std::vector<int> &arr, size_t start, size_t end)
 {
 	if (arr.empty() || start >= end)
 		return nullptr;
 
 	size_t mid = (start + end) / 2;
-	Node* root = new Node(arr[mid]);
+	Node *root = new Node(arr[mid]);
 	root->left = createBSTfromSortedArray(arr, start, mid);
-	root->right = createBSTfromSortedArray(arr, mid+1, end);
+	root->right = createBSTfromSortedArray(arr, mid + 1, end);
 	return root;
 }
-Node* mergeBST(Node* root1, Node* root2)
+Node *mergeBST(Node *root1, Node *root2)
 {
 	if (root1 == nullptr)
 		return root2;
@@ -98,15 +99,15 @@ Node* mergeBST(Node* root1, Node* root2)
 	mergeArrays(arr1, arr2, result);
 
 	size_t len = result.size();
-	return createBSTfromSortedArray(result,0,len);
+	return createBSTfromSortedArray(result, 0, len);
 }
 
 int main()
 {
-	Node* root1 = new Node(100, new Node(50, new Node(20), new Node(70)), new Node(300));
-	Node* root2 = new Node(80, new Node(40), new Node(120));
+	Node *root1 = new Node(100, new Node(50, new Node(20), new Node(70)), new Node(300));
+	Node *root2 = new Node(80, new Node(40), new Node(120));
 
-	Node* mergedTree = mergeBST(root1, root2);
+	Node *mergedTree = mergeBST(root1, root2);
 	printInorder(mergedTree);
 	std::cout << "\n";
 
