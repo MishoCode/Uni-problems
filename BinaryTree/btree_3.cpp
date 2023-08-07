@@ -67,7 +67,33 @@ int sumOfLeftLeaves(Node *root)
     }
 }
 
-void test()
+bool getLca(Node *root, Node *p, Node *q, Node *&result)
+{
+    if (root == nullptr)
+    {
+        return false;
+    }
+
+    bool left = getLca(root->left, p, q, result);
+    bool right = getLca(root->right, p, q, result);
+    bool current = root == p || root == q;
+    if ((left && right) || (left && current) || (right && current))
+    {
+        result = root;
+    }
+
+    return left || right || current;
+}
+
+Node *lca(Node *root, Node *p, Node *q)
+{
+    Node *result = nullptr;
+    getLca(root, p, q, result);
+
+    return result;
+}
+
+void testSumOfLeftLeaves()
 {
     Node *root1 = new Node(1, new Node(9), new Node(20, new Node(15), new Node(7)));
     int result1 = sumOfLeftLeaves(root1);
@@ -85,8 +111,27 @@ void test()
     deleteTree(root3);
 }
 
+void testLca()
+{
+    Node *p = new Node(5,
+                       new Node(6),
+                       new Node(2,
+                                new Node(7), new Node(4)));
+
+    Node *q = new Node(1,
+                       new Node(0), new Node(8));
+
+    Node *root = new Node(3, p, q);
+
+    Node *result = lca(root, p, q);
+    std::cout << (result != nullptr ? result->data : -1) << std::endl;
+    deleteTree(root);
+}
+
 int main()
 {
-    test();
+    // testSumOfLeftLeaves();
+    testLca();
+
     return 0;
 }
